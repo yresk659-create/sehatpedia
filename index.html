@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5faf8">
+  <meta name="description" content="Panduan awal mengenali berbagai penyakit, gejala umum, dan kapan perlu mencari bantuan medis.">
+  <title>Sehatpedia — Kenali, Cegah, Rawat</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #173c36;
+      --muted: #647d77;
+      --green: #187b65;
+      --green-dark: #105947;
+      --mint: #e7f4ef;
+      --paper: #f5faf8;
+      --white: #fff;
+      --line: #e3eeea;
+      --shadow: 0 18px 50px rgba(29, 75, 63, .09);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--paper); }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+
+    .topbar { background: var(--white); border-bottom: 1px solid var(--line); }
+    .nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; font-size: 1.18rem; font-weight: 800; letter-spacing: -.04em; }
+    .brand-mark { width: 39px; height: 39px; display: grid; place-items: center; border-radius: 13px; color: white; background: var(--green); font-size: 1.4rem; }
+    .brand span:last-child { color: var(--green); }
+    .nav-links { display: flex; align-items: center; gap: 29px; color: #52716a; font-size: .92rem; font-weight: 600; }
+    .nav-links a:hover { color: var(--green); }
+    .nav-cta { padding: 11px 17px; color: white !important; background: var(--green); border-radius: 12px; }
+    .menu-toggle { display: none; }
+
+    .hero { position: relative; overflow: hidden; padding: 55px 0 43px; background: linear-gradient(120deg, #eaf6f1, #f8fbf9 69%); }
+    .hero::after { content: "+"; position: absolute; right: 9%; top: -103px; color: rgba(24, 123, 101, .06); font-size: 360px; line-height: 1; font-weight: 300; pointer-events: none; }
+    .hero-content { position: relative; z-index: 1; max-width: 760px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid #d5e9e1; border-radius: 999px; background: rgba(255,255,255,.7); color: var(--green-dark); font-size: .8rem; font-weight: 700; }
+    .eyebrow-dot { width: 8px; height: 8px; border-radius: 50%; background: #45ac82; }
+    h1 { max-width: 700px; margin: 16px 0 10px; font-size: clamp(2.2rem, 5vw, 3.5rem); line-height: 1.08; letter-spacing: -.065em; }
+    h1 em { color: var(--green); font-style: normal; }
+    .hero p { max-width: 580px; margin: 0; color: var(--muted); font-size: 1.08rem; line-height: 1.75; }
+    .search-box { display: flex; align-items: center; gap: 12px; width: min(600px, 100%); margin-top: 22px; padding: 8px 8px 8px 17px; border: 1px solid #dce9e4; border-radius: 15px; background: white; box-shadow: 0 12px 30px rgba(38, 90, 75, .08); }
+    .search-icon { color: #81958f; font-size: 1.15rem; }
+    .search-box input { flex: 1; min-width: 0; padding: 10px 0; border: 0; outline: 0; color: var(--ink); background: transparent; }
+    .search-box input::placeholder { color: #91a29d; }
+    .search-box button { padding: 12px 20px; border: 0; border-radius: 10px; color: white; background: var(--green); font-weight: 700; }
+    .search-box button:hover, .nav-cta:hover { background: var(--green-dark); }
+    .hero-note { margin-top: 13px !important; font-size: .8rem !important; }
+
+    .dashboard { padding-top: 28px; }
+    .dashboard-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 27px; }
+    .metric-card { display: flex; align-items: center; gap: 14px; padding: 18px; border: 1px solid var(--line); border-radius: 16px; background: white; }
+    .metric-icon { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 14px; background: var(--mint); font-size: 1.3rem; }
+    .metric-card strong { display: block; font-size: 1.24rem; letter-spacing: -.04em; }
+    .metric-card span:last-child { display: block; margin-top: 3px; color: var(--muted); font-size: .8rem; }
+    .dashboard-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; margin-bottom: 49px; }
+    .dashboard-columns > .panel:only-child { grid-column: 1 / -1; }
+    .panel { padding: 22px; border: 1px solid var(--line); border-radius: 17px; background: white; }
+    .panel-heading { display: flex; align-items: start; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .panel-heading h2 { margin: 0; font-size: 1.15rem; letter-spacing: -.035em; }
+    .panel-heading p { margin: 5px 0 0; color: var(--muted); font-size: .82rem; line-height: 1.5; }
+    .panel-link { flex: 0 0 auto; padding: 4px 0; border: 0; color: var(--green); background: transparent; font-size: .8rem; font-weight: 750; }
+    .category-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
+    .category-shortcut { min-height: 86px; padding: 12px 7px; border: 1px solid var(--line); border-radius: 12px; color: var(--ink); background: #fbfdfc; text-align: center; }
+    .category-shortcut:hover { border-color: #9dcabb; background: #f0f8f4; }
+    .category-shortcut span { display: block; margin-bottom: 6px; font-size: 1.2rem; }
+    .category-shortcut strong { font-size: .73rem; line-height: 1.25; }
+    .topic-list { display: grid; gap: 8px; }
+    .topic-row { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px; border: 0; border-radius: 12px; color: var(--ink); background: #f8fbf9; text-align: left; }
+    .topic-row:hover { background: var(--mint); }
+    .topic-row .metric-icon { width: 39px; height: 39px; flex: 0 0 auto; font-size: 1.1rem; }
+    .topic-row strong { display: block; font-size: .88rem; }
+    .topic-row small { display: block; margin-top: 4px; color: var(--muted); font-size: .75rem; }
+    .ai-panel { margin-bottom: 28px; }
+    .ai-badge { flex: 0 0 auto; padding: 6px 9px; border-radius: 999px; color: var(--green-dark); background: var(--mint); font-size: .72rem; font-weight: 750; }
+    .chat-messages { display: flex; flex-direction: column; gap: 11px; max-height: 300px; min-height: 150px; overflow-y: auto; padding: 13px; border: 1px solid var(--line); border-radius: 13px; background: #f9fcfa; }
+    .chat-message { max-width: min(85%, 620px); padding: 11px 13px; border-radius: 13px; color: #49675f; background: white; font-size: .88rem; line-height: 1.65; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .chat-message.user { align-self: flex-end; color: white; background: var(--green); }
+    .chat-message.assistant { align-self: flex-start; border: 1px solid var(--line); }
+    .chat-message.pending { color: var(--muted); font-style: italic; }
+    .chat-compose { display: flex; align-items: end; gap: 10px; margin-top: 11px; }
+    .chat-compose textarea { flex: 1; min-height: 46px; max-height: 130px; resize: vertical; padding: 12px; border: 1px solid #dce9e4; border-radius: 12px; outline: none; color: var(--ink); background: white; }
+    .chat-compose textarea:focus { border-color: #77b89e; box-shadow: 0 0 0 3px rgba(24, 123, 101, .1); }
+    .chat-compose button { min-height: 45px; padding: 0 17px; border: 0; border-radius: 11px; color: white; background: var(--green); font-weight: 700; }
+    .chat-compose button:disabled { cursor: not-allowed; opacity: .55; }
+    .chat-status { min-height: 20px; margin: 8px 0 0; color: #a64c38; font-size: .78rem; }
+    .chat-privacy { margin: 7px 0 0; color: var(--muted); font-size: .75rem; line-height: 1.5; }
+    .chat-footer { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
+    .chat-reset { padding: 4px 0; border: 0; color: var(--green); background: transparent; font-size: .78rem; font-weight: 700; }
+    .dashboard-tip { display: flex; align-items: center; gap: 13px; margin-bottom: 47px; padding: 16px 19px; border: 1px solid #d9eae2; border-radius: 15px; background: #edf7f2; }
+    .dashboard-tip > span { font-size: 1.3rem; }
+    .dashboard-tip p { margin: 0; color: #52716a; font-size: .86rem; line-height: 1.55; }
+    .dashboard-tip strong { color: var(--ink); }
+
+    main { padding: 0 0 70px; }
+    #penyakit { scroll-margin-top: 22px; }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 25px; }
+    .section-heading h2 { margin: 0; font-size: clamp(1.7rem, 4vw, 2.25rem); letter-spacing: -.05em; }
+    .section-heading p { max-width: 490px; margin: 8px 0 0; color: var(--muted); line-height: 1.6; }
+    .result-count { flex: 0 0 auto; color: var(--muted); font-size: .86rem; }
+    .filters { display: flex; gap: 9px; overflow-x: auto; padding: 2px 0 13px; scrollbar-width: thin; }
+    .filter { flex: 0 0 auto; padding: 9px 15px; border: 1px solid var(--line); border-radius: 999px; color: #59756e; background: white; font-size: .86rem; font-weight: 650; }
+    .filter:hover, .filter.active { border-color: var(--green); color: white; background: var(--green); }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 17px; margin-top: 10px; }
+    .card { display: flex; flex-direction: column; min-height: 241px; padding: 21px; border: 1px solid var(--line); border-radius: 17px; background: white; box-shadow: 0 5px 18px rgba(29,75,63,.025); transition: transform .18s ease, box-shadow .18s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .card-icon { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 14px; background: #f0f7f4; font-size: 1.42rem; }
+    .category { padding: 6px 9px; border-radius: 999px; color: #52746b; background: #f2f7f5; font-size: .72rem; font-weight: 700; }
+    .card h3 { margin: 17px 0 7px; font-size: 1.08rem; letter-spacing: -.025em; }
+    .card p { display: -webkit-box; overflow: hidden; margin: 0; color: var(--muted); font-size: .88rem; line-height: 1.6; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+    .card-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 17px; }
+    .risk { display: inline-flex; align-items: center; gap: 6px; color: #627b74; font-size: .76rem; }
+    .risk-dot { width: 7px; height: 7px; border-radius: 50%; background: #e3a347; }
+    .details-btn { padding: 7px 10px; border: 0; border-radius: 8px; color: var(--green); background: transparent; font-size: .82rem; font-weight: 750; }
+    .details-btn:hover { background: var(--mint); }
+    .empty { grid-column: 1 / -1; padding: 48px 20px; border: 1px dashed #cbded6; border-radius: 16px; color: var(--muted); text-align: center; background: white; }
+
+    .info-band { display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px; margin-top: 63px; padding: 30px; border-radius: 20px; background: #eaf5f0; }
+    .info-band h2 { margin: 0 0 10px; font-size: 1.4rem; letter-spacing: -.04em; }
+    .info-band p { margin: 0; color: #5d766f; line-height: 1.7; font-size: .92rem; }
+    .emergency { padding: 20px; border: 1px solid #f1d8d1; border-radius: 15px; background: #fff8f6; }
+    .emergency strong { display: block; margin-bottom: 7px; color: #a64c38; }
+    .emergency p { color: #765e59; font-size: .86rem; }
+    .emergency a { display: inline-block; margin-top: 12px; color: #a64c38; font-weight: 750; font-size: .88rem; }
+
+    footer { padding: 25px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; }
+    .footer-row { display: flex; justify-content: space-between; gap: 20px; }
+    .footer-row p { margin: 0; }
+
+    dialog { width: min(560px, calc(100% - 30px)); max-height: min(85vh, 760px); padding: 0; border: 0; border-radius: 20px; color: var(--ink); box-shadow: 0 25px 90px rgba(10, 42, 33, .28); }
+    dialog::backdrop { background: rgba(14, 43, 36, .48); backdrop-filter: blur(3px); }
+    .modal-head { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 23px 25px; border-bottom: 1px solid var(--line); }
+    .modal-title { display: flex; align-items: center; gap: 13px; }
+    .modal-title .card-icon { width: 50px; height: 50px; }
+    .modal-title h2 { margin: 0; font-size: 1.35rem; letter-spacing: -.04em; }
+    .modal-title span { display: block; margin-top: 4px; color: var(--muted); font-size: .78rem; }
+    .close-btn { width: 36px; height: 36px; border: 0; border-radius: 10px; color: #52716a; background: #f2f7f5; font-size: 1.25rem; }
+    .modal-body { padding: 22px 25px 26px; overflow-y: auto; }
+    .modal-body h3 { margin: 19px 0 7px; font-size: .97rem; }
+    .modal-body h3:first-child { margin-top: 0; }
+    .modal-body p, .modal-body li { color: #5f7771; font-size: .9rem; line-height: 1.7; }
+    .modal-body p { margin: 0; }
+    .modal-body ul { margin: 6px 0 0; padding-left: 21px; }
+    .modal-disclaimer { margin-top: 20px !important; padding: 13px; border-radius: 11px; background: #f0f7f4; font-size: .8rem !important; }
+    .disease-choice { display: grid; gap: 7px; margin: 16px 0; color: var(--ink); font-size: .88rem; font-weight: 700; }
+    .disease-choice select { width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; color: var(--ink); background: white; font: inherit; }
+    .disease-choice small { color: var(--muted); font-size: .8rem; font-weight: 400; line-height: 1.5; }
+
+    /* Visual polish */
+    :root {
+      --ink: #173a35;
+      --muted: #6a817b;
+      --green: #16856d;
+      --green-dark: #0c604d;
+      --mint: #e7f5ef;
+      --paper: #f5f8f6;
+      --line: #e5ede9;
+      --shadow: 0 16px 42px rgba(19, 62, 49, .08);
+    }
+
+    body {
+      background:
+        radial-gradient(ellipse at 12% 48%, rgba(201, 231, 216, .22), transparent 34rem),
+        var(--paper);
+      letter-spacing: -.01em;
+    }
+
+    .topbar {
+      position: sticky;
+      z-index: 5;
+      top: 0;
+      background: rgba(255, 255, 255, .92);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(145deg, #1d9a7b, #10624f);
+      box-shadow: 0 7px 15px rgba(24, 123, 101, .2);
+    }
+
+    .nav-links { gap: 25px; }
+    .nav-links a { transition: color .18s ease, background .18s ease, transform .18s ease; }
+    .nav-cta { box-shadow: 0 7px 16px rgba(24, 123, 101, .18); }
+    .nav-cta:hover, .search-box button:hover, .chat-compose button:hover { transform: translateY(-1px); }
+
+    .hero {
+      isolation: isolate;
+      padding: 64px 0 54px;
+      background:
+        radial-gradient(ellipse at 83% 18%, rgba(70, 177, 139, .25), transparent 27rem),
+        linear-gradient(115deg, #103f36 0%, #145b4b 52%, #19725b 100%);
+    }
+
+    .hero::before, .hero::after {
+      position: absolute;
+      z-index: -1;
+      content: "";
+      pointer-events: none;
+    }
+
+    .hero::before {
+      top: -190px;
+      right: -85px;
+      width: 530px;
+      height: 530px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 50%;
+      box-shadow: 0 0 0 42px rgba(255,255,255,.025), 0 0 0 92px rgba(255,255,255,.025);
+    }
+
+    .hero::after {
+      top: auto;
+      right: 12%;
+      bottom: -156px;
+      width: 240px;
+      height: 240px;
+      border: 1px solid rgba(255, 255, 255, .13);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .035);
+      font-size: 0;
+    }
+
+    .hero-content { max-width: 760px; }
+    .eyebrow {
+      padding: 8px 13px;
+      border-color: rgba(255,255,255,.2);
+      color: #e4f6ed;
+      background: rgba(255,255,255,.09);
+      backdrop-filter: blur(6px);
+    }
+    .eyebrow-dot { box-shadow: 0 0 0 4px rgba(69, 172, 130, .16); }
+    h1 { margin-top: 21px; color: white; }
+    h1 em { color: #82dbb5; }
+    .hero p { color: rgba(239, 249, 244, .8); }
+    .search-box {
+      margin-top: 27px;
+      padding: 9px 9px 9px 18px;
+      border: 1px solid rgba(255,255,255,.7);
+      border-radius: 17px;
+      box-shadow: 0 20px 45px rgba(6, 39, 31, .22);
+    }
+    .search-box:focus-within { border-color: #8bd1b4; box-shadow: 0 0 0 4px rgba(139,209,180,.2), 0 20px 45px rgba(6,39,31,.22); }
+    .search-box button, .chat-compose button {
+      background: linear-gradient(135deg, #1a9677, #14745e);
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .search-box button:hover, .chat-compose button:hover { background: linear-gradient(135deg, #16866c, #105d4c); box-shadow: 0 7px 16px rgba(24,123,101,.2); }
+    .hero-note { color: rgba(239, 249, 244, .66) !important; }
+
+    .dashboard { padding-top: 31px; }
+    .dashboard-metrics { gap: 17px; margin-bottom: 23px; }
+    .metric-card {
+      min-height: 89px;
+      padding: 19px;
+      border-color: rgba(223, 235, 229, .9);
+      border-radius: 18px;
+      box-shadow: 0 6px 18px rgba(22, 61, 49, .035);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .metric-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .metric-icon { border-radius: 15px; color: var(--green-dark); }
+    .dashboard-columns { gap: 18px; margin-bottom: 24px; }
+    .panel {
+      padding: 24px;
+      border-color: rgba(223, 235, 229, .9);
+      border-radius: 19px;
+      box-shadow: 0 7px 22px rgba(22, 61, 49, .035);
+    }
+    .panel-heading { margin-bottom: 20px; }
+    .panel-heading h2 { font-size: 1.22rem; }
+    .panel-link { border-radius: 8px; }
+    .panel-link:hover { color: var(--green-dark); background: var(--mint); }
+    .category-grid { gap: 10px; }
+    .category-shortcut {
+      min-height: 91px;
+      border-color: #eaf0ed;
+      border-radius: 14px;
+      background: linear-gradient(150deg, #fff, #f8fbf9);
+      transition: border-color .2s ease, background .2s ease, transform .2s ease, box-shadow .2s ease;
+    }
+    .category-shortcut span { margin-bottom: 8px; font-size: 1.35rem; }
+    .category-shortcut strong { color: #44645b; font-size: .76rem; }
+    .category-shortcut:hover { transform: translateY(-2px); border-color: #a7d5c0; background: #f1f8f4; box-shadow: 0 8px 16px rgba(22, 91, 67, .07); }
+    .topic-list { gap: 9px; }
+    .topic-row {
+      min-height: 61px;
+      padding: 10px 12px;
+      border: 1px solid transparent;
+      background: #f8faf9;
+      transition: border-color .2s ease, background .2s ease, transform .2s ease;
+    }
+    .topic-row:hover { transform: translateX(2px); border-color: #d7ebe1; background: #f0f8f4; }
+    .topic-row .metric-icon { border-radius: 13px; }
+    .ai-panel { margin-bottom: 22px; background: linear-gradient(145deg, #fff 60%, #f8fcf9); }
+    .ai-badge { border: 1px solid #d8ede2; }
+    .nav-links button { font: inherit; cursor: pointer; }
+    .auth-open {
+      max-width: 180px;
+      overflow: hidden;
+      padding: 10px 13px;
+      border: 1px solid #d7e9e0;
+      border-radius: 11px;
+      color: var(--green-dark);
+      background: #f5faf7;
+      font-weight: 700;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .auth-open:hover { background: var(--mint); }
+    .auth-open:disabled { cursor: default; opacity: 1; }
+    .logout-action {
+      padding: 9px 11px;
+      border: 0;
+      border-radius: 10px;
+      color: #a64c38;
+      background: transparent;
+      font-weight: 700;
+    }
+    .logout-action:hover { background: #fff3ef; }
+    [hidden] { display: none !important; }
+    .auth-dialog { width: min(440px, calc(100% - 28px)); }
+    .auth-card { padding: 26px; }
+    .auth-card-head { display: flex; align-items: start; justify-content: space-between; gap: 16px; margin-bottom: 21px; }
+    .auth-card h2 { margin: 0; font-size: 1.45rem; letter-spacing: -.04em; }
+    .auth-card-head p { margin: 7px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.5; }
+    .auth-form { display: grid; gap: 14px; }
+    .auth-field { display: grid; gap: 6px; color: #47675e; font-size: .83rem; font-weight: 700; }
+    .auth-field input {
+      width: 100%;
+      min-height: 45px;
+      padding: 10px 12px;
+      border: 1px solid #dce9e4;
+      border-radius: 11px;
+      color: var(--ink);
+      background: white;
+      font-weight: 400;
+    }
+    .auth-field input:focus { border-color: #77b89e; outline: 0; box-shadow: 0 0 0 3px rgba(24,123,101,.1); }
+    .auth-submit {
+      min-height: 46px;
+      margin-top: 3px;
+      border: 0;
+      border-radius: 11px;
+      color: white;
+      background: linear-gradient(135deg, #1a9677, #14745e);
+      font-weight: 750;
+    }
+    .auth-submit:disabled { cursor: wait; opacity: .65; }
+    .auth-status { min-height: 19px; margin: 0; color: #a64c38; font-size: .8rem; line-height: 1.45; }
+    .auth-switch { margin: 17px 0 0; color: var(--muted); font-size: .84rem; text-align: center; }
+    .auth-switch button { padding: 0; border: 0; color: var(--green); background: transparent; font-weight: 750; }
+    .auth-switch button:hover { text-decoration: underline; }
+    .chat-status.error { color: #a64c38; }
+    .chat-messages { background: #f7faf8; }
+    .chat-message.user { background: linear-gradient(135deg, #16856d, #12634f); }
+    .chat-compose textarea { transition: border-color .18s ease, box-shadow .18s ease; }
+    .chat-reset:hover { color: var(--green-dark); text-decoration: underline; }
+    .dashboard-tip { border-radius: 16px; }
+
+    .section-heading { margin-bottom: 20px; }
+    .section-heading h2 { font-size: clamp(1.8rem, 3.5vw, 2.25rem); }
+    .filters { padding-bottom: 14px; }
+    .filter { transition: border-color .18s ease, color .18s ease, background .18s ease, transform .18s ease; }
+    .filter:hover { transform: translateY(-1px); }
+    .grid { gap: 18px; }
+    .card {
+      min-height: 250px;
+      padding: 22px;
+      border-color: rgba(223, 235, 229, .9);
+      border-radius: 19px;
+      box-shadow: 0 7px 22px rgba(22, 61, 49, .035);
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .card:hover { transform: translateY(-4px); border-color: #cce4d8; box-shadow: 0 16px 34px rgba(29,75,63,.09); }
+    .card-icon { border-radius: 15px; background: linear-gradient(145deg, #eff8f3, #e6f3ec); }
+    .category { background: #f0f6f3; }
+    .details-btn { border-radius: 9px; transition: background .18s ease; }
+    .info-band { border: 1px solid #dcebe3; background: linear-gradient(130deg, #e9f5ef, #f3f8f5); }
+    .emergency { border-radius: 16px; }
+    footer { background: rgba(255,255,255,.38); }
+    button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 3px solid rgba(24, 123, 101, .35);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 800px) {
+      .nav-links { gap: 16px; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .info-band { grid-template-columns: 1fr; }
+      .dashboard-columns { grid-template-columns: 1fr; }
+      .dashboard-columns > .panel:only-child { grid-column: auto; }
+    }
+    @media (max-width: 540px) {
+      .wrap { width: min(100% - 28px, 1120px); }
+      .nav { min-height: 66px; }
+      .nav-cta { padding: 9px 12px; font-size: .8rem; }
+      .hero { padding: 42px 0 34px; }
+      .hero::after { right: -17%; top: -18px; font-size: 250px; }
+      .hero p { font-size: .98rem; }
+      .search-box { gap: 8px; padding-left: 12px; }
+      .search-box button { padding: 11px 13px; }
+      .dashboard { padding-top: 20px; }
+      .dashboard-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin-bottom: 20px; }
+      .metric-card { min-width: 0; padding: 13px 12px; gap: 10px; }
+      .metric-card:last-child { grid-column: 1 / -1; }
+      .metric-icon { width: 40px; height: 40px; flex: 0 0 auto; }
+      .dashboard-columns { gap: 12px; margin-bottom: 35px; }
+      .chat-compose { align-items: stretch; }
+      .chat-compose button { padding: 0 13px; }
+      .chat-footer { flex-direction: column; gap: 5px; }
+      .panel { padding: 17px; }
+      .category-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .dashboard-tip { margin-bottom: 35px; }
+      .section-heading { align-items: start; flex-direction: column; gap: 9px; }
+      .grid { grid-template-columns: 1fr; }
+      .card { min-height: 215px; }
+      .info-band { margin-top: 42px; padding: 22px; }
+      .footer-row { flex-direction: column; }
+      .modal-head { padding: 18px; }
+      .modal-body { padding: 19px 18px 22px; }
+    }
+
+    @media (max-width: 900px) {
+      .nav { position: relative; min-height: 66px; }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 42px;
+        padding: 0 12px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        color: var(--ink);
+        background: white;
+        font-size: .85rem;
+        font-weight: 700;
+      }
+      .menu-icon { display: grid; gap: 4px; }
+      .menu-icon span { display: block; width: 16px; height: 2px; border-radius: 2px; background: currentColor; }
+      .nav-links { display: none; }
+      .nav-links.open {
+        position: absolute;
+        z-index: 6;
+        top: calc(100% - 1px);
+        right: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: 0 0 16px 16px;
+        background: rgba(255,255,255,.98);
+        box-shadow: 0 14px 28px rgba(19,62,49,.12);
+      }
+      .nav-links.open a {
+        display: block;
+        padding: 12px;
+        border-radius: 10px;
+      }
+      .nav-links.open button { width: 100%; max-width: none; text-align: left; }
+      .nav-links.open .logout-action { padding: 12px; }
+      .nav-links.open a:hover { background: #f0f8f4; }
+      .nav-links.open .nav-cta { margin-top: 4px; text-align: center; }
+      .wrap { width: min(100% - 32px, 1120px); }
+      .hero { padding: 43px 0 38px; }
+      .hero-content, .panel, .card, .info-band > *, .dashboard-columns > * { min-width: 0; }
+      .dashboard-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .category-shortcut { min-height: 82px; }
+      .chat-compose textarea { min-width: 0; font-size: 16px; }
+      .chat-compose button { flex: 0 0 auto; }
+      .filters { overscroll-behavior-x: contain; }
+      .info-band { gap: 16px; }
+      .emergency a { line-height: 1.5; }
+      .footer-row { flex-direction: column; }
+      .auth-card { padding: 21px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav wrap" aria-label="Navigasi utama">
+      <a class="brand" href="#" aria-label="Sehatpedia beranda">
+        <span class="brand-mark" aria-hidden="true">✚</span>
+        <span>sehat<span>pedia</span></span>
+      </a>
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">
+        <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span>Menu</span>
+      </button>
+      <div class="nav-links" id="nav-links">
+        <a href="#beranda">Beranda</a>
+        <a href="#penyakit">Direktori penyakit</a>
+        <a href="game.html">Game anak</a>
+        <a href="#panduan">Panduan kesehatan</a>
+        <a href="#asisten">Asisten AI</a>
+        <a class="nav-cta" href="#penyakit">Jelajahi topik</a>
+        <button class="auth-open" id="auth-open" type="button">Masuk</button>
+        <button class="logout-action" id="logout-action" type="button" hidden>Keluar</button>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="wrap hero-content">
+      <span class="eyebrow"><span class="eyebrow-dot"></span> Dashboard kesehatan</span>
+      <h1>Selamat datang di<br><em>Sehatpedia.</em></h1>
+      <p>Temukan informasi kesehatan yang kamu butuhkan, kenali topik populer, dan mulai jaga kesehatan dari sini.</p>
+      <form class="search-box" id="search-form" role="search">
+        <span class="search-icon" aria-hidden="true">⌕</span>
+        <input id="search-input" type="search" placeholder="Cari penyakit atau gejala..." aria-label="Cari penyakit atau gejala">
+        <button type="submit">Cari</button>
+      </form>
+      <p class="hero-note" id="today-date"></p>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <section class="dashboard" id="beranda" aria-label="Ringkasan kesehatan">
+      <div class="dashboard-metrics">
+        <article class="metric-card"><span class="metric-icon" aria-hidden="true">📚</span><div><strong id="topic-total">0</strong><span>Ringkasan kondisi kesehatan</span></div></article>
+        <article class="metric-card"><span class="metric-icon" aria-hidden="true">🧭</span><div><strong id="category-total">0</strong><span>Kategori untuk dijelajahi</span></div></article>
+        <article class="metric-card"><span class="metric-icon" aria-hidden="true">💚</span><div><strong>Edukasi</strong><span>Informasi awal, bukan diagnosis</span></div></article>
+      </div>
+
+      <div class="dashboard-columns">
+        <section class="panel" aria-labelledby="category-title">
+          <div class="panel-heading">
+            <div><h2 id="category-title">Jelajahi kategori</h2><p>Pilih topik kesehatan yang ingin kamu baca.</p></div>
+            <a class="panel-link" href="#penyakit">Semua →</a>
+          </div>
+          <div class="category-grid" id="dashboard-categories"></div>
+        </section>
+
+        <section class="panel" aria-labelledby="popular-title">
+          <div class="panel-heading">
+            <div><h2 id="popular-title">Topik populer</h2><p>Mulai dari ringkasan kondisi yang umum dibahas.</p></div>
+            <a class="panel-link" href="#penyakit">Lihat direktori →</a>
+          </div>
+          <div class="topic-list" id="popular-topics"></div>
+        </section>
+      </div>
+
+      <section class="panel ai-panel" id="asisten" aria-labelledby="ai-title">
+        <div class="panel-heading">
+          <div><h2 id="ai-title">Tanya Sehatpedia AI</h2><p>Ajukan pertanyaan umum tentang kesehatan dalam bahasa sehari-hari.</p></div>
+          <span class="ai-badge">AI · OpenAI</span>
+        </div>
+        <div class="chat-messages" id="chat-messages" role="log" aria-live="polite" aria-label="Percakapan dengan asisten AI"></div>
+        <form class="chat-compose" id="chat-form">
+          <textarea id="chat-input" maxlength="1800" rows="2" placeholder="Contoh: Apa kebiasaan yang membantu menjaga tekanan darah?" aria-label="Tulis pertanyaan untuk asisten AI" required></textarea>
+          <button type="submit" id="chat-send">Kirim</button>
+        </form>
+        <p class="chat-status" id="chat-status" role="status" aria-live="polite"></p>
+        <div class="chat-footer">
+          <p class="chat-privacy">Pesan dikirim ke OpenAI untuk dijawab. Jangan masukkan nama, NIK, alamat, atau data pribadi. Bukan diagnosis atau layanan darurat.</p>
+          <button class="chat-reset" id="chat-reset" type="button">Hapus chat</button>
+        </div>
+      </section>
+
+      <aside class="dashboard-tip">
+        <span aria-hidden="true">🌿</span>
+        <p><strong>Ingat:</strong> informasi kesehatan di sini bersifat edukatif. Untuk keluhan pribadi, diagnosis, atau pilihan pengobatan, konsultasikan dengan tenaga kesehatan.</p>
+      </aside>
+    </section>
+
+    <section id="penyakit" aria-labelledby="directory-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="directory-title">Jelajahi direktori</h2>
+          <p>Ringkasan beberapa kondisi kesehatan yang umum. Pilih kategori atau cari topik yang ingin kamu ketahui.</p>
+        </div>
+        <span class="result-count" id="result-count" aria-live="polite"></span>
+      </div>
+      <div class="filters" id="filters" aria-label="Filter kategori"></div>
+      <div class="grid" id="disease-grid"></div>
+    </section>
+
+    <section class="info-band" id="panduan" aria-labelledby="guide-title">
+      <div>
+        <h2 id="guide-title">Informasi adalah langkah awal</h2>
+        <p>Setiap orang dapat mengalami gejala yang berbeda. Catat keluhan dan kapan mulai dirasakan, lalu diskusikan dengan dokter atau tenaga kesehatan untuk mendapatkan penilaian yang tepat.</p>
+      </div>
+      <aside class="emergency">
+        <strong>Butuh pertolongan segera?</strong>
+        <p>Jika ada sesak napas berat, nyeri dada, pingsan, perdarahan hebat, atau kondisi darurat lainnya, segera hubungi layanan darurat setempat atau pergi ke IGD.</p>
+        <a href="tel:119">Hubungi 119 (layanan medis darurat) →</a>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row">
+      <p><strong>Sehatpedia</strong> · Teman belajar kesehatanmu.</p>
+      <p>Konten ini bersifat edukatif, bukan diagnosis atau pengganti saran dokter.</p>
+    </div>
+  </footer>
+
+  <dialog id="detail-dialog" aria-labelledby="modal-name">
+    <div id="modal-content"></div>
+  </dialog>
+  <dialog class="auth-dialog" id="auth-dialog" aria-labelledby="auth-title">
+    <div id="auth-content"></div>
+  </dialog>
+
+  <script>
+    const diseaseCatalog = [
+      { name: "Influenza", category: "Pernapasan", icon: "🤧", risk: "Biasanya ringan", summary: "Nyeri yang bikin hidung mampet, batuk, demam, dan badan pegal-pegal. Umumnya muncul mendadak dan bikin lemas.", symptoms: ["Demam atau menggigil", "Batuk, sakit tenggorokan, atau hidung mampet", "Badan pegal, sakit kepala, dan capek"], care: "Istirahat yang cukup, banyak minum, dan pantau dulu kondisinya. Kalau aman, obat untuk batuk atau demam bisa dipakai sesuai aturan di kemasan atau saran dokter.", seek: "Segera ke dokter kalau susah bernapas, nyeri dada, atau kondisinya terasa makin parah." },
+      { name: "Diabetes", category: "Metabolik", icon: "🩸", risk: "Perlu pantau rutin", summary: "Diabetes adalah kondisi saat gula darah terlalu tinggi. Penyebab dan penanganannya tergantung jenisnya.", symptoms: ["Sering haus dan sering pipis", "Mudah capek atau penglihatan kabur", "Kadang baru terasa gejalanya setelah lama"], care: "Cek gula darah. Cara merawatnya bisa berbeda tergantung jenis diabetes, jadi ikuti anjuran dokter.", seek: "Segera periksa kalau pusing hebat, kebingungan, atau badan terasa lemas sekali.", types: [{ name: "Tipe 1", description: "Tubuh hampir tidak memproduksi insulin. Penanganannya perlu dibahas dengan dokter." }, { name: "Tipe 2", description: "Tubuh tidak menggunakan insulin dengan baik. Pola hidup dan pengobatan dibahas sesuai kondisi." }, { name: "Diabetes saat hamil", description: "Gula darah tinggi yang muncul saat kehamilan dan perlu dipantau tenaga kesehatan." }] },
+      { name: "Hipertensi", category: "Jantung & pembuluh", icon: "💓", risk: "Sering nggak terasa", summary: "Tekanan darah tinggi yang lama-lama bisa bikin jantung, otak, dan ginjal jadi berisiko.", symptoms: ["Banyak orang nggak merasa apa-apa", "Baru ketahuan saat cek tensi", "Kadang sakit kepala, tapi nggak selalu"], care: "Cek tekanan darah secara rutin. Gaya hidup yang lebih sehat dan obat kalau perlu bisa membantu menurunkannya.", seek: "Segera ke rumah sakit atau dokter kalau nyeri dada, susah napas, tiba-tiba lemas, atau bicara jadi pelo.", levels: [{ name: "Tahap 1", description: "Tahap ditentukan dari hasil pengukuran tekanan darah berulang oleh tenaga kesehatan." }, { name: "Tahap 2", description: "Tahap ditentukan dari hasil pengukuran tekanan darah berulang oleh tenaga kesehatan." }, { name: "Tahap 3", description: "Tekanan darah sangat tinggi perlu penilaian tenaga kesehatan. Jangan menentukan tahap sendiri." }] },
+      { name: "Asma", category: "Pernapasan", icon: "🌬️", risk: "Bisa kambuh", summary: "Saluran napas gampang bengkak dan sesak, jadi sering batuk dan susah bernapas saat ada pemicu.", symptoms: ["Batuk atau mengi", "Dada terasa sesak atau berat", "Gejalanya sering muncul malam hari atau saat ada pemicu"], care: "Tahu pemicu dan ikuti rencana pengobatan dari dokter. Pakai obat sesuai petunjuk, jangan asal pakai.", seek: "Segera cari pertolongan kalau sesak berat, susah ngomong, atau obat yang biasa dipakai nggak membantu.", levels: [{ name: "Ringan", description: "Keluhan biasanya lebih jarang, tetapi tingkat asma tetap perlu dinilai dokter." }, { name: "Sedang", description: "Keluhan bisa lebih sering mengganggu kegiatan. Penilaiannya perlu dokter." }, { name: "Berat", description: "Keluhan dapat sering atau berat. Ikuti pengobatan dari dokter dan segera cari bantuan bila sesak berat." }] },
+      { name: "Asam Lambung", category: "Pencernaan", icon: "🍵", risk: "Sering kambuh", summary: "Asam lambung naik ke kerongkongan, bikin dada terasa panas dan mulut rasanya asam.", symptoms: ["Rasa panas di dada setelah makan", "Asam naik ke mulut", "Kadang makin terasa kalau tidur miring"], care: "Catet makanan atau kebiasaan yang memicu. Atur pola makan dan tanyakan obat yang aman ke dokter kalau perlu.", seek: "Periksa ke dokter kalau sering kambuh, susah menelan, muntah darah, atau berat badan turun tanpa sebab." },
+      { name: "Migrain", category: "Saraf", icon: "🧠", risk: "Bisa kambuh", summary: "Sakit kepala yang berdenyut dan sering bikin sensitif sama cahaya atau suara.", symptoms: ["Sakit kepala sedang sampai berat", "Mual atau muntah", "Sakit bila ada cahaya atau suara terlalu keras"], care: "Istirahat di tempat yang tenang dan catat pemicu. Diskusi soal pengobatan bisa dibicarakan dengan dokter.", seek: "Segera ke dokter atau rumah sakit kalau sakit kepala tiba-tiba parah, disertai lemas, kebingungan, atau susah bicara." },
+      { name: "Anemia", category: "Darah", icon: "🩺", risk: "Perlu cek darah", summary: "Kadar sel darah merah atau hemoglobin rendah, bikin tubuh gampang capek dan pusing.", symptoms: ["Lemas dan gampang capek", "Pusing atau tampak pucat", "Nafas cepat saat beraktivitas"], care: "Penyebabnya bisa beda-beda, jadi perlu cek ke dokter. Jangan minum suplemen zat besi sembarangan tanpa saran tenaga kesehatan.", seek: "Periksa bila gejalanya menetap, terutama kalau sampai pingsan, sesak berat, atau ada perdarahan." },
+      { name: "Demam Berdarah Dengue (DBD)", category: "Infeksi", icon: "🦟", risk: "Perlu pantau ketat", summary: "Virus dengue yang masuk lewat gigitan nyamuk Aedes bisa bikin demam tinggi dan berbahaya kalau tidak diwaspadai.", symptoms: ["Demam tinggi", "Sakit kepala, otot, atau belakang mata", "Mual, ruam, atau sedikit berdarah"], care: "Segera cek ke fasilitas kesehatan kalau ada dugaan dengue. Banyak minum dan hindari aspirin atau ibuprofen kalau belum jelas penyebabnya.", seek: "Bawa ke rumah sakit kalau perut sakit banget, muntah terus, berdarah, lemas berat, atau kulit jadi dingin." },
+      { name: "Tuberkulosis (TBC)", category: "Infeksi", icon: "🫁", risk: "Perlu pengobatan tuntas", summary: "Infeksi bakteri yang sering menyerang paru-paru dan bisa menular lewat udara.", symptoms: ["Batuk lama", "Demam, berkeringat malam, atau berat badan turun", "Dahak bisa bercampur darah"], care: "Periksa ke dokter untuk diagnosis. Pengobatan TBC harus jalan sampai tuntas dan sesuai jadwal.", seek: "Segera periksa kalau batuk lama atau sering kontak dekat dengan penderita TBC. Pakai masker kalau lagi batuk-batuk.", aliases: ["Tuberkulosis Paru", "Tuberkulosis Kelenjar", "Tuberkulosis Tulang"], types: [{ name: "Paru", description: "TBC yang menyerang paru-paru." }, { name: "Kelenjar", description: "TBC yang menyerang kelenjar getah bening." }, { name: "Tulang", description: "TBC yang menyerang tulang atau sendi." }] },
+      { name: "Infeksi Saluran Kemih", category: "Infeksi", icon: "💧", risk: "Perlu diperiksa", summary: "Infeksi di bagian saluran kemih, paling sering di kandung kemih, bikin urin terasa nyeri atau sering ingin pipis.", symptoms: ["Nyeri atau panas saat buang air kecil", "Sering ingin pipis", "Urine keruh atau berbau aneh"], care: "Butuh pemeriksaan untuk tahu obat yang tepat. Antibiotik hanya boleh dipakai kalau resep dari dokter.", seek: "Segera ke dokter kalau demam tinggi, nyeri pinggang, muntah, atau sedang hamil." },
+      { name: "Eksim / Gatal Kulit", category: "Kulit", icon: "🌿", risk: "Bisa kambuh", summary: "Kulit jadi kering, gatal, dan muncul ruam yang sering datang lagi.", symptoms: ["Kulit kering dan gatal", "Ruam yang datang dan pergi", "Kulit bisa menebal kalau sering digaruk"], care: "Gunakan pelembap yang lembut dan hindari pemicu yang bikin gatal. Dokter bisa kasih perawatan yang cocok dengan kondisi kulit.", seek: "Periksa kalau ruam makin luas, sakit, bernanah, atau tidak membaik." },
+      { name: "Osteoartritis", category: "Sendi & tulang", icon: "🦴", risk: "Perlu pengelolaan", summary: "Sendi terasa nyeri dan kaku, terutama kalau dipakai lama atau setelah tidur.", symptoms: ["Nyeri saat sendi dipakai", "Kaku setelah lama tidak bergerak", "Gerak sendi jadi terbatas"], care: "Olahraga yang pas dan jaga berat badan bisa membantu. Pilihan pengobatan biasanya dibahas dengan tenaga kesehatan.", seek: "Periksa kalau nyeri sendi berat, bengkak tiba-tiba, atau gerakan jadi sangat terbatas." },
+      { name: "Depresi", category: "Kesehatan mental", icon: "🌱", risk: "Perlu dukungan", summary: "Perasaan sedih atau down yang lama bisa mengganggu pikiran, tidur, dan cara kita menjalani hari.", symptoms: ["Sedih berkepanjangan atau hilang semangat", "Tidur, nafsu makan, atau energi berubah", "Sulit fokus dan merasa tidak berharga"], care: "Bicara dengan orang yang dipercaya dan cari bantuan profesional. Depresi bisa diatasi dengan dukungan yang tepat.", seek: "Kalau muncul pikiran menyakiti diri, jangan ditahan sendirian. Segera hubungi orang terdekat, tenaga profesional, atau layanan darurat." }
+    ];
+
+    const additionalDiseaseGroups = [
+      { category: "Infeksi pencernaan", icon: "🦠", names: ["Kolera", "Tifus", "Paratifus", "Salmonelosis", "Shigellosis", "Keracunan Makanan Bakteri", "Amebiasis", "Giardiasis", "Kriptosporidiosis", "Rotavirus", "Norovirus"] },
+      { category: "Infeksi", icon: "🦠", names: ["Pes", "Antraks", "Brusellosis", "Leptospirosis", "Tetanus", "Difteri", "Batuk Rejan (Pertusis)", "Demam Scarlet", "Penyakit Meningokokus", "Sepsis", "Aktinomikosis", "Nokardiosis", "Tifus Epidemi", "Demam Berbintik Rocky Mountain", "Demam Q", "Poliomielitis", "Rabies", "Ensefalitis Virus", "Demam Kuning", "Chikungunya", "Penyakit Virus Zika", "Ebola", "Cacar Air", "Herpes Zoster", "Campak", "Rubella", "Cacar Monyet (Mpox)", "Gondongan (Mumps)", "Mononukleosis Infeksiosa", "Sitomegalovirus", "COVID-19", "SARS", "MERS"] },
+      { category: "Infeksi menular seksual", icon: "🧬", names: ["Sipilis", "Gonore", "Klamidia", "Trikomoniasis", "Herpes Simpleks", "Kutil Kelamin (HPV)", "HIV/AIDS"] },
+      { category: "Infeksi jamur", icon: "🍄", names: ["Kandidiasis", "Kriptokokosis", "Aspergillosis", "Histoplasmosis", "Panu", "Kurap", "Kaki Atlet"] },
+      { category: "Infeksi parasit", icon: "🪱", names: ["Malaria", "Leishmaniasis", "Tripanosomiasis", "Toksoplasmosis", "Skistosomiasis", "Filariasis (Kaki Gajah)", "Cacing Pita", "Cacing Gelang", "Cacing Tambang", "Cacing Kremi", "Kudis (Skabies)", "Kutu Rambut"] },
+      { category: "Pernapasan", icon: "🫁", names: ["Pneumonia", "Bronkitis", "Sinusitis", "Radang Tenggorokan", "Penyakit Paru Obstruktif Kronis (PPOK)"] },
+      { category: "Jantung & pembuluh", icon: "💓", names: ["Penyakit Jantung Koroner", "Gagal Jantung", "Aritmia Jantung"] },
+      { category: "Saraf", icon: "🧠", names: ["Epilepsi", "Parkinson", "Alzheimer"] },
+      { category: "Ginjal & saluran kemih", icon: "💧", names: ["Penyakit Ginjal Kronis", "Batu Ginjal"] },
+      { category: "Sendi & tulang", icon: "🦴", names: ["Asam Urat", "Osteoporosis"] }
+    ];
+    const diseaseDescriptions = {
+      "Kolera": "Infeksi usus dari bakteri yang bisa menyebar lewat makanan atau air tercemar dan menyebabkan diare berat.",
+      "Tifus": "Infeksi bakteri yang biasanya menular lewat makanan atau air tercemar dan dapat menyebabkan demam berkepanjangan.",
+      "Paratifus": "Infeksi bakteri yang mirip tifus dan biasanya menular lewat makanan atau air yang tercemar.",
+      "Salmonelosis": "Infeksi bakteri Salmonella, sering terkait makanan tercemar, yang dapat menyebabkan diare dan kram perut.",
+      "Shigellosis": "Infeksi usus oleh bakteri Shigella yang dapat menyebabkan diare, sakit perut, dan demam.",
+      "Keracunan Makanan Bakteri": "Sakit setelah makan makanan yang tercemar bakteri atau racunnya; keluhannya bisa berupa mual, muntah, atau diare.",
+      "Amebiasis": "Infeksi parasit ameba yang biasanya menyerang usus dan dapat menimbulkan diare atau sakit perut.",
+      "Giardiasis": "Infeksi parasit di usus yang dapat menular lewat air atau makanan tercemar.",
+      "Kriptosporidiosis": "Infeksi parasit usus yang dapat menyebabkan diare dan sering menyebar lewat air tercemar.",
+      "Rotavirus": "Infeksi virus pada saluran cerna yang sering menyebabkan diare dan muntah, terutama pada anak kecil.",
+      "Norovirus": "Virus yang mudah menular dan bisa menyebabkan muntah serta diare.",
+      "Pes": "Infeksi bakteri yang biasanya menular melalui kutu hewan pengerat dan dapat menjadi kondisi serius.",
+      "Antraks": "Infeksi bakteri dari spora yang bisa masuk lewat kulit, makanan, atau udara; bentuk penyakitnya bergantung pada jalur masuk.",
+      "Brusellosis": "Infeksi bakteri yang dapat menular dari hewan ternak atau produk susu yang tidak dipasteurisasi.",
+      "Leptospirosis": "Infeksi bakteri dari urine hewan yang mencemari air atau tanah, lalu masuk ke tubuh melalui kulit atau mulut.",
+      "Tetanus": "Infeksi bakteri yang racunnya dapat membuat otot kaku dan kejang.",
+      "Difteri": "Infeksi bakteri yang biasanya menyerang tenggorokan dan dapat mengganggu pernapasan.",
+      "Batuk Rejan (Pertusis)": "Infeksi saluran napas yang menyebabkan batuk panjang dan berulang.",
+      "Demam Scarlet": "Infeksi bakteri streptokokus yang dapat disertai sakit tenggorokan, demam, dan ruam.",
+      "Penyakit Meningokokus": "Infeksi bakteri yang dapat menyerang selaput otak atau aliran darah dan perlu penanganan cepat.",
+      "Sepsis": "Reaksi tubuh yang sangat berat terhadap infeksi dan dapat merusak organ.",
+      "Aktinomikosis": "Infeksi bakteri yang dapat menimbulkan benjolan atau kumpulan nanah, biasanya di mulut, dada, atau perut.",
+      "Nokardiosis": "Infeksi bakteri yang paling sering menyerang paru-paru, tetapi bisa menyebar ke bagian tubuh lain.",
+      "Tifus Epidemi": "Infeksi bakteri yang biasanya menular lewat kutu badan dan menimbulkan demam serta ruam.",
+      "Demam Berbintik Rocky Mountain": "Infeksi bakteri yang menular lewat gigitan kutu dan dapat menyebabkan demam serta ruam.",
+      "Demam Q": "Infeksi bakteri yang biasanya menular dari hewan ternak ke manusia, terutama melalui udara yang tercemar.",
+      "Poliomielitis": "Infeksi virus polio yang dapat menyerang saraf dan pada sebagian kasus menyebabkan kelumpuhan.",
+      "Rabies": "Infeksi virus yang biasanya menular lewat gigitan hewan dan menyerang otak serta saraf.",
+      "Ensefalitis Virus": "Peradangan otak akibat virus yang dapat menyebabkan demam, sakit kepala, atau perubahan kesadaran.",
+      "Demam Kuning": "Infeksi virus yang menular lewat nyamuk dan dapat menyerang hati serta organ lain.",
+      "Chikungunya": "Infeksi virus dari nyamuk yang sering menyebabkan demam dan nyeri sendi.",
+      "Penyakit Virus Zika": "Infeksi virus yang umumnya menular lewat nyamuk; infeksi saat hamil dapat membahayakan perkembangan janin.",
+      "Ebola": "Infeksi virus berat yang dapat menyebabkan demam dan gangguan pada banyak organ tubuh.",
+      "Cacar Air": "Infeksi virus yang biasanya menimbulkan demam dan bintil berisi cairan yang gatal.",
+      "Herpes Zoster": "Ruam nyeri yang muncul ketika virus cacar air aktif kembali di dalam tubuh.",
+      "Campak": "Infeksi virus yang sangat mudah menular dan biasanya menyebabkan demam serta ruam.",
+      "Rubella": "Infeksi virus yang sering menyebabkan ruam ringan, tetapi berbahaya bila terjadi saat kehamilan.",
+      "Cacar Monyet (Mpox)": "Infeksi virus yang dapat menyebabkan demam, pembengkakan kelenjar, dan ruam atau luka pada kulit.",
+      "Gondongan (Mumps)": "Infeksi virus yang dapat membuat kelenjar ludah di dekat rahang membengkak dan terasa nyeri.",
+      "Mononukleosis Infeksiosa": "Infeksi virus yang sering menyebabkan badan sangat lelah, demam, sakit tenggorokan, dan kelenjar bengkak.",
+      "Sitomegalovirus": "Infeksi virus yang umum; sering tidak terasa, tetapi bisa berat pada bayi dan orang dengan daya tahan tubuh lemah.",
+      "COVID-19": "Infeksi virus corona yang terutama menyerang saluran napas dan tingkat beratnya bisa berbeda-beda.",
+      "SARS": "Penyakit saluran napas akibat virus corona yang dapat menyebabkan gangguan pernapasan berat.",
+      "MERS": "Penyakit saluran napas akibat virus corona yang dapat menjadi berat pada sebagian orang.",
+      "Sipilis": "Infeksi yang menular lewat hubungan seksual dan dapat merusak organ bila tidak ditangani.",
+      "Gonore": "Infeksi yang menular lewat hubungan seksual dan dapat menyerang saluran kemih atau organ reproduksi.",
+      "Klamidia": "Infeksi yang menular lewat hubungan seksual dan sering tidak menimbulkan gejala.",
+      "Trikomoniasis": "Infeksi parasit yang menular lewat hubungan seksual dan dapat menyebabkan keluhan pada organ reproduksi.",
+      "Herpes Simpleks": "Infeksi virus yang dapat menimbulkan lepuhan atau luka di sekitar mulut atau organ reproduksi dan bisa kambuh.",
+      "Kutil Kelamin (HPV)": "Infeksi HPV tertentu yang dapat menyebabkan kutil di sekitar organ reproduksi; jenis HPV lain berisiko menyebabkan kanker.",
+      "HIV/AIDS": "HIV menyerang sistem kekebalan tubuh; AIDS adalah tahap lanjut bila infeksi tidak terkendali.",
+      "Kandidiasis": "Infeksi jamur Candida yang bisa menyerang mulut, kulit, atau organ reproduksi.",
+      "Kriptokokosis": "Infeksi jamur yang paling sering menyerang paru-paru dan pada kondisi tertentu bisa mencapai otak.",
+      "Aspergillosis": "Infeksi atau reaksi tubuh terhadap jamur Aspergillus yang biasanya berkaitan dengan paru-paru.",
+      "Histoplasmosis": "Infeksi jamur yang biasanya masuk ke tubuh saat spora di udara terhirup dan sering menyerang paru-paru.",
+      "Panu": "Infeksi jamur kulit yang menimbulkan bercak dengan warna berbeda dari kulit sekitarnya.",
+      "Kurap": "Infeksi jamur kulit yang sering membentuk ruam melingkar dan terasa gatal.",
+      "Kaki Atlet": "Infeksi jamur pada kulit kaki yang dapat menyebabkan gatal, bersisik, atau pecah-pecah.",
+      "Malaria": "Penyakit parasit yang menular lewat gigitan nyamuk dan dapat menyebabkan demam berulang.",
+      "Leishmaniasis": "Infeksi parasit yang menular lewat gigitan lalat pasir dan dapat menyerang kulit atau organ dalam.",
+      "Tripanosomiasis": "Kelompok infeksi parasit yang dapat menular melalui serangga dan menyerang darah atau sistem saraf.",
+      "Toksoplasmosis": "Infeksi parasit yang sering tidak bergejala, tetapi dapat berbahaya pada kehamilan atau daya tahan tubuh lemah.",
+      "Skistosomiasis": "Infeksi cacing parasit yang menular saat kulit terkena air tawar yang tercemar.",
+      "Filariasis (Kaki Gajah)": "Infeksi cacing yang ditularkan nyamuk dan dapat menyebabkan pembengkakan pada bagian tubuh.",
+      "Cacing Pita": "Infeksi cacing pipih yang biasanya terjadi setelah menelan makanan yang mengandung larva cacing.",
+      "Cacing Gelang": "Infeksi cacing usus yang dapat menular lewat telur cacing pada tanah atau makanan tercemar.",
+      "Cacing Tambang": "Infeksi cacing yang larvanya dapat masuk melalui kulit dan hidup di usus.",
+      "Cacing Kremi": "Infeksi cacing kecil di usus yang sering menyebabkan gatal di sekitar anus, terutama malam hari.",
+      "Kudis (Skabies)": "Gangguan kulit menular akibat tungau kecil yang biasanya menyebabkan gatal hebat.",
+      "Kutu Rambut": "Serangga kecil yang hidup di rambut kepala dan menyebabkan gatal.",
+      "Pneumonia": "Infeksi paru-paru yang dapat membuat batuk, demam, dan napas terasa berat.",
+      "Bronkitis": "Peradangan saluran udara di paru-paru yang biasanya menyebabkan batuk.",
+      "Sinusitis": "Peradangan rongga di sekitar hidung yang dapat menyebabkan hidung tersumbat dan rasa tertekan di wajah.",
+      "Radang Tenggorokan": "Peradangan di tenggorokan yang bisa disebabkan virus atau bakteri dan membuat menelan terasa sakit.",
+      "Penyakit Paru Obstruktif Kronis (PPOK)": "Penyakit paru jangka panjang yang membuat aliran udara menyempit dan napas terasa sesak.",
+      "Penyakit Jantung Koroner": "Penyempitan pembuluh darah yang memasok darah ke otot jantung.",
+      "Gagal Jantung": "Kondisi saat jantung tidak mampu memompa darah sebaik yang dibutuhkan tubuh.",
+      "Aritmia Jantung": "Gangguan irama jantung yang membuat detak terlalu cepat, terlalu lambat, atau tidak teratur.",
+      "Stroke": "Gangguan aliran darah ke otak atau perdarahan di otak yang perlu ditangani segera.",
+      "Epilepsi": "Gangguan saraf yang menyebabkan kejang berulang.",
+      "Parkinson": "Penyakit saraf yang dapat menyebabkan gerakan melambat, kaku, atau gemetar.",
+      "Alzheimer": "Penyakit otak yang makin lama dapat mengganggu ingatan dan kemampuan menjalani kegiatan sehari-hari.",
+      "Penyakit Ginjal Kronis": "Penurunan fungsi ginjal yang berlangsung lama dan biasanya perlu dipantau.",
+      "Batu Ginjal": "Endapan keras dari mineral yang terbentuk di ginjal dan kadang menyebabkan nyeri saat keluar.",
+      "Kanker Payudara": "Pertumbuhan sel tidak normal di jaringan payudara yang dapat membentuk benjolan atau perubahan lain.",
+      "Kanker Paru": "Pertumbuhan sel tidak normal di paru-paru yang dapat mengganggu pernapasan.",
+      "Kanker Usus Besar": "Pertumbuhan sel tidak normal di usus besar yang dapat berkembang perlahan.",
+      "Asam Urat": "Penumpukan kristal asam urat di sendi yang bisa menyebabkan nyeri dan bengkak mendadak.",
+      "Osteoporosis": "Kondisi saat tulang menjadi lebih rapuh sehingga lebih mudah patah."
+    };
+    const hepatitisTypes = ["A", "B", "C", "D", "E"].map((type) => ({
+      name: `Hepatitis ${type}`,
+      description: "Jenis hepatitis yang perlu dipastikan lewat pemeriksaan tenaga kesehatan."
+    }));
+    const additionalDiseases = additionalDiseaseGroups
+      .filter((group) => group.names.length > 0)
+      .flatMap((group) => group.names.map((name) => ({
+        name,
+        category: group.category,
+        icon: group.icon,
+        risk: "Perlu info medis",
+        summary: diseaseDescriptions[name] || "Keterangan khusus penyakit ini belum tersedia.",
+        symptoms: [],
+        care: "",
+        seek: "",
+        limitedInfo: true
+      })));
+    additionalDiseases.push({
+      name: "Hepatitis",
+      category: "Infeksi",
+      icon: "🟠",
+      risk: "Perlu info medis",
+      summary: "Hepatitis adalah peradangan hati. Jenis A sampai E punya penyebab dan cara penularan yang berbeda.",
+      symptoms: [],
+      care: "",
+      seek: "",
+      limitedInfo: true,
+      types: hepatitisTypes
+    });
+    additionalDiseases.push({
+      name: "Kanker",
+      category: "Kanker",
+      icon: "🎗️",
+      risk: "Perlu pemeriksaan",
+      summary: "Kanker adalah pertumbuhan sel tubuh yang tidak normal. Pilihan ini memuat jenis-jenis utama, bukan semua subtipe kanker; diagnosis dan tahapnya perlu ditentukan lewat pemeriksaan.",
+      symptoms: [],
+      care: "",
+      seek: "",
+      limitedInfo: true,
+      types: [
+        { name: "Payudara", description: "Kanker yang bermula di jaringan payudara." },
+        { name: "Paru", description: "Kanker yang bermula di paru-paru." },
+        { name: "Usus besar", description: "Kanker yang bermula di usus besar atau rektum." },
+        { name: "Prostat", description: "Kanker yang bermula di kelenjar prostat." },
+        { name: "Serviks (leher rahim)", description: "Kanker yang bermula di leher rahim." },
+        { name: "Ovarium", description: "Kanker yang bermula di indung telur." },
+        { name: "Endometrium (rahim)", description: "Kanker yang bermula di lapisan dalam rahim." },
+        { name: "Hati", description: "Kanker yang bermula di jaringan hati." },
+        { name: "Lambung", description: "Kanker yang bermula di lambung." },
+        { name: "Pankreas", description: "Kanker yang bermula di pankreas." },
+        { name: "Kerongkongan", description: "Kanker yang bermula di saluran antara tenggorokan dan lambung." },
+        { name: "Ginjal", description: "Kanker yang bermula di jaringan ginjal." },
+        { name: "Kandung kemih", description: "Kanker yang bermula di lapisan kandung kemih." },
+        { name: "Tiroid", description: "Kanker yang bermula di kelenjar tiroid di leher." },
+        { name: "Melanoma kulit", description: "Kanker yang bermula dari sel pembuat pigmen kulit." },
+        { name: "Kanker kulit lainnya", description: "Kanker yang bermula di sel kulit selain melanoma." },
+        { name: "Otak", description: "Kanker yang bermula di jaringan otak." },
+        { name: "Tulang", description: "Kanker yang bermula di tulang." },
+        { name: "Leukemia", description: "Kanker pada jaringan pembentuk darah, biasanya melibatkan sumsum tulang." },
+        { name: "Limfoma Hodgkin", description: "Kanker pada sistem limfatik jenis Hodgkin." },
+        { name: "Limfoma Non-Hodgkin", description: "Kelompok kanker pada sistem limfatik selain jenis Hodgkin." },
+        { name: "Multiple myeloma", description: "Kanker pada sel plasma, salah satu jenis sel darah putih." },
+        { name: "Testis", description: "Kanker yang bermula di salah satu atau kedua testis." },
+        { name: "Penis", description: "Kanker yang bermula di jaringan penis." },
+        { name: "Vagina", description: "Kanker yang bermula di jaringan vagina." },
+        { name: "Vulva", description: "Kanker yang bermula di bagian luar organ reproduksi perempuan." },
+        { name: "Mulut", description: "Kanker yang bermula di bagian dalam mulut." },
+        { name: "Nasofaring", description: "Kanker yang bermula di bagian atas tenggorokan di belakang hidung." },
+        { name: "Laring", description: "Kanker yang bermula di kotak suara." },
+        { name: "Kandung empedu", description: "Kanker yang bermula di kandung empedu." },
+        { name: "Saluran empedu", description: "Kanker yang bermula di saluran pembawa cairan empedu." },
+        { name: "Usus halus", description: "Kanker yang bermula di usus halus." },
+        { name: "Kelenjar adrenal", description: "Kanker yang bermula di kelenjar di atas ginjal." },
+        { name: "Mesothelioma", description: "Kanker pada selaput yang melapisi paru-paru atau rongga tubuh tertentu." },
+        { name: "Sarkoma jaringan lunak", description: "Kelompok kanker yang bermula di otot, lemak, pembuluh, atau jaringan lunak lain." },
+        { name: "Neuroblastoma", description: "Kanker yang bermula di sel saraf yang belum matang dan paling sering ditemukan pada anak." },
+        { name: "Retinoblastoma", description: "Kanker langka pada retina mata yang biasanya terjadi pada anak." },
+        { name: "Timus", description: "Kanker yang bermula di kelenjar timus di bagian dada." },
+        { name: "Glioma", description: "Kelompok tumor yang bermula di sel penunjang jaringan otak atau sumsum tulang belakang." },
+        { name: "Kanker lain", description: "Ada banyak jenis kanker lain; nama dan jenis pastinya perlu ditentukan lewat pemeriksaan." }
+      ],
+      levels: [
+        { name: "Tahap 1", description: "Tahap awal; arti tepatnya bergantung pada jenis kanker. Penentuan tahap dilakukan dokter." },
+        { name: "Tahap 2", description: "Tahap kanker dinilai dari jenis dan luas penyebarannya; penentuan tahap dilakukan dokter." },
+        { name: "Tahap 3", description: "Tahap kanker dinilai dari jenis dan luas penyebarannya; penentuan tahap dilakukan dokter." },
+        { name: "Tahap 4", description: "Pada banyak kanker, artinya kanker sudah menyebar jauh; arti tepatnya bergantung pada jenis kanker." }
+      ]
+    });
+    additionalDiseases.push({
+      name: "Stroke",
+      category: "Saraf",
+      icon: "🧠",
+      risk: "Darurat bila bergejala",
+      summary: "Stroke terjadi saat aliran darah ke otak tersumbat atau ada pembuluh darah yang pecah. Wajah mencong, lemah sebelah, atau bicara pelo perlu pertolongan darurat segera.",
+      symptoms: [],
+      care: "",
+      seek: "",
+      limitedInfo: true,
+      types: [
+        { name: "Iskemik", description: "Terjadi saat aliran darah ke bagian otak tersumbat." },
+        { name: "Hemoragik", description: "Terjadi saat pembuluh darah di otak pecah dan menyebabkan perdarahan." }
+      ]
+    });
+
+    const diseases = [...diseaseCatalog, ...additionalDiseases];
+
+    const categories = ["Semua", ...new Set(diseases.map((disease) => disease.category))];
+    const grid = document.getElementById("disease-grid");
+    const filters = document.getElementById("filters");
+    const searchInput = document.getElementById("search-input");
+    const resultCount = document.getElementById("result-count");
+    const dialog = document.getElementById("detail-dialog");
+    const dashboardCategories = document.getElementById("dashboard-categories");
+    const popularTopics = document.getElementById("popular-topics");
+    let activeCategory = "Semua";
+    const chatMessages = [];
+    const chatLog = document.getElementById("chat-messages");
+    const chatInput = document.getElementById("chat-input");
+    const chatSend = document.getElementById("chat-send");
+    const chatStatus = document.getElementById("chat-status");
+    const menuToggle = document.getElementById("menu-toggle");
+    const navLinks = document.getElementById("nav-links");
+    const authDialog = document.getElementById("auth-dialog");
+    const authContent = document.getElementById("auth-content");
+    const authOpen = document.getElementById("auth-open");
+    const logoutAction = document.getElementById("logout-action");
+    let currentUser = null;
+    let authMode = "login";
+    let authServiceError = "";
+
+    menuToggle.addEventListener("click", () => {
+      const isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
+      menuToggle.setAttribute("aria-expanded", String(!isExpanded));
+      navLinks.classList.toggle("open", !isExpanded);
+    });
+
+    navLinks.addEventListener("click", (event) => {
+      if (!event.target.closest("a")) return;
+      menuToggle.setAttribute("aria-expanded", "false");
+      navLinks.classList.remove("open");
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      menuToggle.setAttribute("aria-expanded", "false");
+      navLinks.classList.remove("open");
+    });
+
+    function appendChatMessage(role, text, pending = false) {
+      const message = document.createElement("div");
+      message.className = `chat-message ${role}${pending ? " pending" : ""}`;
+      message.textContent = text;
+      chatLog.append(message);
+      chatLog.scrollTop = chatLog.scrollHeight;
+      return message;
+    }
+
+    function resetChat() {
+      chatMessages.length = 0;
+      chatLog.replaceChildren();
+      appendChatMessage(
+        "assistant",
+        currentUser
+          ? `Halo, ${currentUser.name}! Saya bisa membantu menjelaskan informasi kesehatan umum. Apa yang ingin kamu ketahui?`
+          : "Masuk atau buat akun untuk menggunakan asisten AI kesehatan."
+      );
+      chatStatus.textContent = "";
+      chatStatus.classList.remove("error");
+      updateChatAccess();
+    }
+
+    function updateChatAccess() {
+      const signedIn = Boolean(currentUser);
+      chatInput.disabled = !signedIn;
+      chatSend.disabled = !signedIn;
+      chatInput.placeholder = signedIn
+        ? "Contoh: Apa kebiasaan yang membantu menjaga tekanan darah?"
+        : "Masuk terlebih dahulu untuk bertanya kepada asisten AI.";
+      if (!signedIn && !chatStatus.classList.contains("error")) {
+        chatStatus.textContent = authServiceError || "Asisten AI tersedia setelah masuk ke akun.";
+        chatStatus.classList.toggle("error", Boolean(authServiceError));
+      } else if (signedIn && !chatStatus.classList.contains("error")) {
+        chatStatus.textContent = "";
+        chatStatus.classList.remove("error");
+      }
+    }
+
+    function renderAccountState() {
+      if (currentUser) {
+        authOpen.textContent = `Halo, ${currentUser.name}`;
+        authOpen.title = `Masuk sebagai ${currentUser.name}`;
+        authOpen.disabled = true;
+        logoutAction.hidden = false;
+      } else {
+        authOpen.textContent = "Masuk";
+        authOpen.title = "Masuk atau buat akun";
+        authOpen.disabled = false;
+        logoutAction.hidden = true;
+      }
+      updateChatAccess();
+    }
+
+    function renderAuthDialog(mode) {
+      authMode = mode;
+      const registering = mode === "register";
+      authContent.innerHTML = `
+        <div class="auth-card">
+          <div class="auth-card-head">
+            <div>
+              <h2 id="auth-title">${registering ? "Buat akun Sehatpedia" : "Selamat datang kembali"}</h2>
+              <p>${registering ? "Daftar untuk menggunakan asisten kesehatan AI." : "Masuk untuk melanjutkan ke asisten kesehatan AI."}</p>
+            </div>
+            <button class="close-btn" type="button" aria-label="Tutup">×</button>
+          </div>
+          <form class="auth-form" id="auth-form" novalidate>
+            ${registering ? `<label class="auth-field">Nama
+              <input name="name" type="text" autocomplete="name" maxlength="60" required>
+            </label>` : ""}
+            <label class="auth-field">Email
+              <input name="email" type="email" autocomplete="email" maxlength="254" required>
+            </label>
+            <label class="auth-field">Kata sandi
+              <input name="password" type="password" autocomplete="${registering ? "new-password" : "current-password"}" minlength="10" maxlength="128" required>
+              ${registering ? "<small>Minimal 10 karakter.</small>" : ""}
+            </label>
+            <p class="auth-status" id="auth-status" role="status" aria-live="polite"></p>
+            <button class="auth-submit" type="submit">${registering ? "Daftar" : "Masuk"}</button>
+          </form>
+          <p class="auth-switch">
+            ${registering ? "Sudah punya akun?" : "Belum punya akun?"}
+            <button type="button" data-auth-mode="${registering ? "login" : "register"}">${registering ? "Masuk" : "Daftar"}</button>
+          </p>
+        </div>`;
+    }
+
+    function openAuthDialog(mode = "login") {
+      if (currentUser) return;
+      renderAuthDialog(mode);
+      if (!authDialog.open) authDialog.showModal();
+      authContent.querySelector('input[name="email"]').focus();
+    }
+
+    authOpen.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      openAuthDialog(currentUser ? "login" : authMode);
+    });
+
+    logoutAction.addEventListener("click", async () => {
+      logoutAction.disabled = true;
+      try {
+        const response = await fetch("/api/auth/logout", { method: "POST" });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || "Tidak dapat keluar dari akun.");
+        currentUser = null;
+        chatMessages.length = 0;
+        renderAccountState();
+        resetChat();
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+      } catch (error) {
+        chatStatus.textContent = error.message || "Tidak dapat menghubungi server.";
+        chatStatus.classList.add("error");
+      } finally {
+        logoutAction.disabled = false;
+      }
+    });
+
+    authContent.addEventListener("click", (event) => {
+      if (event.target.closest(".close-btn")) {
+        authDialog.close();
+        return;
+      }
+      const modeButton = event.target.closest("[data-auth-mode]");
+      if (modeButton) renderAuthDialog(modeButton.dataset.authMode);
+    });
+
+    authContent.addEventListener("submit", async (event) => {
+      if (event.target.id !== "auth-form") return;
+      event.preventDefault();
+      const form = event.target;
+      const formData = new FormData(form);
+      const registering = authMode === "register";
+      const payload = {
+        email: formData.get("email"),
+        password: formData.get("password")
+      };
+      if (registering) payload.name = formData.get("name");
+
+      const status = document.getElementById("auth-status");
+      const submit = form.querySelector(".auth-submit");
+      status.textContent = "";
+      submit.disabled = true;
+      submit.textContent = registering ? "Membuat akun..." : "Memeriksa...";
+      try {
+        const response = await fetch(`/api/auth/${registering ? "register" : "login"}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || "Permintaan akun gagal.");
+        currentUser = result.user;
+        authServiceError = "";
+        authDialog.close();
+        renderAccountState();
+        resetChat();
+      } catch (error) {
+        status.textContent = error.message || "Tidak dapat menghubungi server. Coba lagi.";
+      } finally {
+        submit.disabled = false;
+        submit.textContent = registering ? "Daftar" : "Masuk";
+      }
+    });
+
+    authDialog.addEventListener("click", (event) => {
+      if (event.target === authDialog) authDialog.close();
+    });
+
+    async function loadCurrentUser() {
+      try {
+        const response = await fetch("/api/auth/me");
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || "Status akun tidak dapat diperiksa.");
+        currentUser = result.user;
+      } catch (error) {
+        currentUser = null;
+        authServiceError = error.message || "Tidak dapat memeriksa akun. Jalankan website melalui server.";
+      }
+      renderAccountState();
+      resetChat();
+    }
+
+    document.getElementById("chat-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!currentUser) {
+        openAuthDialog("login");
+        return;
+      }
+      const message = chatInput.value.trim();
+      if (!message || chatSend.disabled) return;
+
+      chatMessages.push({ role: "user", content: message });
+      appendChatMessage("user", message);
+      chatInput.value = "";
+      chatSend.disabled = true;
+      chatStatus.textContent = "";
+      const pending = appendChatMessage("assistant", "Sedang menyiapkan jawaban…", true);
+
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ messages: chatMessages.slice(-10) })
+        });
+        const result = await response.json();
+        if (response.status === 401) {
+          currentUser = null;
+          renderAccountState();
+          openAuthDialog("login");
+        }
+        if (!response.ok) throw new Error(result.error || "Asisten AI belum dapat menjawab. Coba lagi.");
+        if (typeof result.reply !== "string" || !result.reply.trim()) throw new Error("Jawaban AI kosong. Silakan coba lagi.");
+        pending.remove();
+        chatMessages.push({ role: "assistant", content: result.reply });
+        appendChatMessage("assistant", result.reply);
+      } catch (error) {
+        pending.remove();
+        chatMessages.pop();
+        chatStatus.textContent = error.message || "Tidak dapat menghubungi asisten AI. Pastikan server berjalan lalu coba lagi.";
+        chatStatus.classList.add("error");
+      } finally {
+        chatSend.disabled = !currentUser;
+        if (currentUser) chatInput.focus();
+      }
+    });
+
+    document.getElementById("chat-reset").addEventListener("click", resetChat);
+
+    function renderDashboard() {
+      document.getElementById("topic-total").textContent = diseases.length;
+      document.getElementById("category-total").textContent = categories.length - 1;
+      document.getElementById("today-date").textContent = new Intl.DateTimeFormat("id-ID", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      }).format(new Date());
+
+      dashboardCategories.innerHTML = categories
+        .filter((category) => category !== "Semua")
+        .slice(0, 6)
+        .map((category) => {
+          const representative = diseases.find((disease) => disease.category === category);
+          return `<button class="category-shortcut" type="button" data-dashboard-category="${category}">
+            <span aria-hidden="true">${representative.icon}</span><strong>${category}</strong>
+          </button>`;
+        }).join("");
+
+      const popularNames = ["Influenza", "Hipertensi", "Diabetes"];
+      const featured = popularNames
+        .map((name) => diseases.find((disease) => disease.name === name))
+        .filter(Boolean);
+
+      popularTopics.innerHTML = featured.map((disease) => {
+        const index = diseases.indexOf(disease);
+        return `<button class="topic-row" type="button" data-detail="${index}">
+          <span class="metric-icon" aria-hidden="true">${disease.icon}</span>
+          <span><strong>${disease.name}</strong><small>${disease.category} · ${disease.risk}</small></span>
+        </button>`;
+      }).join("");
+    }
+
+    function renderFilters() {
+      filters.innerHTML = categories.map((category) =>
+        `<button class="filter${category === activeCategory ? " active" : ""}" type="button" aria-pressed="${category === activeCategory}" data-category="${category}">${category}</button>`
+      ).join("");
+    }
+
+    function renderDiseases() {
+      const query = searchInput.value.trim().toLocaleLowerCase("id");
+      const filtered = diseases.filter((disease) => {
+        const categoryMatches = activeCategory === "Semua" || disease.category === activeCategory;
+        const searchable = `${disease.name} ${disease.category} ${disease.summary} ${disease.symptoms.join(" ")} ${(disease.aliases || []).join(" ")} ${(disease.types || []).map((type) => type.name).join(" ")}`.toLocaleLowerCase("id");
+        return categoryMatches && (!query || searchable.includes(query));
+      });
+
+      resultCount.textContent = `${filtered.length} topik`;
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div class="empty">Topik belum ditemukan. Coba kata kunci atau kategori lain.</div>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map((disease) => {
+        const index = diseases.indexOf(disease);
+        return `<article class="card">
+          <div class="card-top"><span class="card-icon" aria-hidden="true">${disease.icon}</span><span class="category">${disease.category}</span></div>
+          <h3>${disease.name}</h3>
+          <p>${disease.summary}</p>
+          <div class="card-bottom"><span class="risk"><span class="risk-dot"></span>${disease.risk}</span><button class="details-btn" type="button" data-detail="${index}">Baca ringkasan →</button></div>
+        </article>`;
+      }).join("");
+    }
+
+    function showDetails(disease) {
+      const renderChoice = (kind, label, choices) => {
+        if (!choices || choices.length === 0) return "";
+        return `<label class="disease-choice">${label}
+          <select data-disease-choice="${kind}">
+            <option value="">Pilih salah satu...</option>
+            ${choices.map((choice, index) => `<option value="${index}">${choice.name}</option>`).join("")}
+          </select>
+          <small data-choice-description="${kind}">Pilih salah satu untuk melihat penjelasan singkat.</small>
+        </label>`;
+      };
+
+      document.getElementById("modal-content").innerHTML = `
+        <div class="modal-head">
+          <div class="modal-title"><span class="card-icon" aria-hidden="true">${disease.icon}</span><div><h2 id="modal-name">${disease.name}</h2><span>${disease.category}</span></div></div>
+          <button class="close-btn" type="button" aria-label="Tutup">×</button>
+        </div>
+        <div class="modal-body">
+          ${renderChoice("types", "Pilih tipe", disease.types)}
+          ${renderChoice("levels", "Pilih tingkatan", disease.levels)}
+          ${disease.limitedInfo
+            ? `<h3>Gambaran umum</h3><p>${disease.summary}</p><p>Gejala dan penanganan khusus dapat berbeda. Konsultasikan pemeriksaan dan langkah yang sesuai dengan tenaga kesehatan.</p>`
+            : `<h3>Gambaran umum</h3><p>${disease.summary}</p>
+              <h3>Gejala yang mungkin muncul</h3><ul>${disease.symptoms.map((symptom) => `<li>${symptom}</li>`).join("")}</ul>
+              <h3>Langkah awal</h3><p>${disease.care}</p>
+              <h3>Kapan perlu mencari bantuan?</h3><p>${disease.seek}</p>`}
+          <p class="modal-disclaimer">Gejala dapat memiliki banyak penyebab. Informasi ini bukan diagnosis. Konsultasikan kondisi pribadi dengan dokter atau tenaga kesehatan.</p>
+        </div>`;
+      dialog.querySelectorAll("[data-disease-choice]").forEach((select) => {
+        select.addEventListener("change", () => {
+          const description = dialog.querySelector(`[data-choice-description="${select.dataset.diseaseChoice}"]`);
+          const choice = select.value === "" ? null : disease[select.dataset.diseaseChoice][Number(select.value)];
+          description.textContent = choice
+            ? choice.description
+            : "Pilih salah satu untuk melihat penjelasan singkat.";
+        });
+      });
+      dialog.showModal();
+      dialog.querySelector(".close-btn").focus();
+    }
+
+    filters.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-category]");
+      if (!button) return;
+      activeCategory = button.dataset.category;
+      renderFilters();
+      renderDiseases();
+    });
+
+    dashboardCategories.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-dashboard-category]");
+      if (!button) return;
+      activeCategory = button.dataset.dashboardCategory;
+      searchInput.value = "";
+      renderFilters();
+      renderDiseases();
+      document.getElementById("penyakit").scrollIntoView({ behavior: "smooth" });
+    });
+
+    popularTopics.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-detail]");
+      if (button) showDetails(diseases[Number(button.dataset.detail)]);
+    });
+
+    grid.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-detail]");
+      if (button) showDetails(diseases[Number(button.dataset.detail)]);
+    });
+
+    document.getElementById("search-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      renderDiseases();
+      document.getElementById("penyakit").scrollIntoView({ behavior: "smooth" });
+    });
+
+    searchInput.addEventListener("input", renderDiseases);
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog || event.target.closest(".close-btn")) dialog.close();
+    });
+
+    loadCurrentUser();
+    renderDashboard();
+    renderFilters();
+    renderDiseases();
+  </script>
+</body>
+</html>
